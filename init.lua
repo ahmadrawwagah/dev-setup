@@ -357,7 +357,7 @@ require("lazy").setup({
 
 
 		{
-			"nvim-treesitter/nvim-treesitter",
+			'nvim-treesitter/nvim-treesitter',
 			build = ":TSUpdate",
 			config = function()
 				local configs = require("nvim-treesitter.configs")
@@ -374,10 +374,11 @@ require("lazy").setup({
 		{ 'neovim/nvim-lspconfig' },
 		{ 'hrsh7th/nvim-cmp' },
 		{ 'hrsh7th/cmp-nvim-lsp' },
-		{ "junegunn/fzf" },
+		{ 'junegunn/fzf' },
 		{ 'junegunn/fzf.vim' },
-		{ "feline-nvim/feline.nvim" },
-		{ 'akinsho/bufferline.nvim', version = "*",       dependencies = 'nvim-tree/nvim-web-devicons' }
+		{ 'feline-nvim/feline.nvim' },
+		{ 'akinsho/bufferline.nvim', version = "*",       dependencies = 'nvim-tree/nvim-web-devicons' },
+		{ 'tpope/vim-fugitive' }
 	},
 	install = { colorscheme = { "habamax" } },
 	checker = { enabled = true },
