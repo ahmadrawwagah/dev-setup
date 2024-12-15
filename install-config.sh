@@ -2,7 +2,7 @@ echo "Installing Alacritty Config"
 cp ./.alacritty.toml ~/
 echo "Installing Nvim and Tmux Config"
 mkdir -p ~/.config/nvim
-cp ./tmux.conf ~/
+cp ./.tmux.conf ~/
 cp ./init.lua ~/.config/nvim/
 rm -rf ~/.config/tmux/plugins
 mkdir -p ~/.config/tmux/plugins/
