@@ -369,7 +369,45 @@ require("lazy").setup({
 					indent = { enable = true },
 				})
 			end
+		}, {
+		"folke/trouble.nvim",
+		opts = {}, -- for default options, refer to the configuration section for custom setup.
+		cmd = "Trouble",
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle win.position=right win.size=0.25<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0 win.position=right win.size=0.25<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>cs",
+				"<cmd>Trouble symbols toggle focus=true win.position=right win.size=0.25<cr>",
+				desc = "Symbols (Trouble)",
+			},
+			{
+				"<leader>cl",
+				"<cmd>Trouble lsp toggle focus=true win.position=right win.size=0.25<cr>",
+				desc = "LSP Definitions / references / ... (Trouble)",
+			},
+			{
+				"<leader>xL",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>xQ",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
 		},
+	},
+		{ 'lewis6991/gitsigns.nvim' },
+		{ 'j-hui/fidget.nvim' },
 		{ 'echasnovski/mini.nvim',   version = false },
 		{ 'neovim/nvim-lspconfig' },
 		{ 'hrsh7th/nvim-cmp' },
@@ -484,6 +522,9 @@ require("bufferline").setup({
 	}
 })
 
+require('gitsigns').setup()
+
+require("fidget").setup()
 
 
 vim.cmd.colorscheme "catppuccin"
@@ -515,4 +556,12 @@ vim.cmd([[nnoremap <Tab> :bnext<cr>]])
 vim.cmd([[nnoremap <S-Tab> :bprevious<cr>]])
 vim.cmd([[nnoremap <C-c> :bp\|bd<cr>]])
 vim.cmd([[nnoremap <C-s> :Neotree focus git_status<cr>]])
+vim.cmd([[nnoremap <leader>bl :Gitsigns blame<cr>]])
+vim.cmd([[nnoremap <leader>Bl :Gitsigns toggle_current_line_blame<cr>]])
 vim.cmd([[autocmd StdinReadPre * let s:std_in=1]])
+
+
+
+
+
+
