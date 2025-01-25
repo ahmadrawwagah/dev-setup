@@ -10,5 +10,7 @@ echo "Installing Tmux Plugins"
 git clone https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/
 git clone https://github.com/tmux-plugins/tmux-cpu ~/.config/tmux/plugins/tmux-cpu
 git clone https://github.com/tmux-plugins/tmux-battery ~/.config/tmux/plugins/tmux-battery
+git clone https://github.com/tmux-plugins/tmux-yank ~/.config/tmux/plugins/tmux-yank
+
 
 echo "Need to install clangd, pylsp, lualsp, fzf, bat, ripgrep, the_silver_searcher, perl, universal-ctags"

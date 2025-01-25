@@ -1,5 +1,4 @@
 vim.opt.termguicolors = true
--- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -15,28 +14,41 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	end
 end
 vim.opt.rtp:prepend(lazypath)
-
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-
--- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
-
-
-		{ "catppuccin/nvim",         name = "catppuccin", priority = 1000 },
-
+		{ "catppuccin/nvim",                          name = "catppuccin", priority = 1000 },
+		{ 'junegunn/fzf' },
+		{ 'rust-lang/rust.vim' },
+		{ 'nvim-telescope/telescope.nvim' },
+		{ 'lewis6991/gitsigns.nvim' },
+		{ 'echasnovski/mini.nvim', },
+		{ 'nvim-lua/plenary.nvim' },
+		{ 'nvim-tree/nvim-web-devicons' },
+		{ 'MunifTanjim/nui.nvim' },
+		{ 'neovim/nvim-lspconfig' },
+		{ 'hrsh7th/nvim-cmp' },
+		{ 'hrsh7th/cmp-nvim-lsp' },
+		{ 'hrsh7th/cmp-path' },
+		{ 'hrsh7th/cmp-buffer' },
+		{ 'hrsh7th/cmp-cmdline' },
+		{ 'feline-nvim/feline.nvim' },
+		{ 'rcarriga/nvim-notify' },
+		{ 'akinsho/bufferline.nvim' },
+		{ 'soulis-1256/eagle.nvim' },
+		{ 'tpope/vim-fugitive' },
+		{ 'folke/noice.nvim' },
+		{ 'dstein64/nvim-scrollview' },
+		{ 'lukas-reineke/indent-blankline.nvim' },
+		{ 'mfussenegger/nvim-dap' },
+		{ 'nvim-neotest/nvim-nio' },
+		{ 'rcarriga/nvim-dap-ui' },
+		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 		{
 			"nvim-neo-tree/neo-tree.nvim",
 			branch = "v3.x",
 			dependencies = {
-				"nvim-lua/plenary.nvim",
-				"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-				"MunifTanjim/nui.nvim",
-				"3rd/image.nvim",  -- Optional image support in preview window: See `# Preview Mode` for more information
 				{
 					's1n7ax/nvim-window-picker',
 					version = '2.*',
@@ -45,11 +57,8 @@ require("lazy").setup({
 							filter_rules = {
 								include_current_win = false,
 								autoselect_one = true,
-								-- filter using buffer options
 								bo = {
-									-- if the file type is one of following, the window will be ignored
 									filetype = { 'neo-tree', "neo-tree-popup", "notify" },
-									-- if the buffer type is one of following, the window will be ignored
 									buftype = { 'terminal', "quickfix" },
 								},
 							},
@@ -58,7 +67,6 @@ require("lazy").setup({
 				},
 			},
 			config = function()
-				-- If you want icons for diagnostic errors, you'll need to define them somewhere:
 				vim.fn.sign_define("DiagnosticSignError",
 					{ text = " ", texthl = "DiagnosticSignError" })
 				vim.fn.sign_define("DiagnosticSignWarn",
@@ -76,13 +84,6 @@ require("lazy").setup({
 					open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
 					sort_case_insensitive = false,                      -- used when sorting files and directories in the tree
 					sort_function = nil,                                -- use a custom function for sorting files and directories in the tree
-					-- sort_function = function (a,b)
-					--       if a.type == b.type then
-					--           return a.path > b.path
-					--       else
-					--           return a.type > b.type
-					--       end
-					--   end , -- this sorts files and directories descendantly
 					default_component_configs = {
 						container = {
 							enable_character_fade = true
@@ -95,7 +96,6 @@ require("lazy").setup({
 							indent_marker = "│",
 							last_indent_marker = "└",
 							highlight = "NeoTreeIndentMarker",
-							-- expander config, needed for nesting files
 							with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
 							expander_collapsed = "",
 							expander_expanded = "",
@@ -116,8 +116,6 @@ require("lazy").setup({
 									end
 								end
 							end,
-							-- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
-							-- then these will never be used.
 							default = "*",
 							highlight = "NeoTreeFileIcon"
 						},
@@ -132,12 +130,10 @@ require("lazy").setup({
 						},
 						git_status = {
 							symbols = {
-								-- Change type
 								added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
 								modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
 								deleted   = "✖", -- this can only be used in the git_status source
 								renamed   = "󰁕", -- this can only be used in the git_status source
-								-- Status type
 								untracked = "",
 								ignored   = "",
 								unstaged  = "󰄱",
@@ -145,7 +141,6 @@ require("lazy").setup({
 								conflict  = "",
 							}
 						},
-						-- If you don't want to use these columns, you can set `enabled = false` for each of them individually
 						file_size = {
 							enabled = true,
 							required_width = 64, -- min width of window required to show this column
@@ -166,9 +161,6 @@ require("lazy").setup({
 							enabled = false,
 						},
 					},
-					-- A list of functions, each representing a global custom command
-					-- that will be available in all sources (if not overridden in `opts[source_name].commands`)
-					-- see `:h neo-tree-custom-commands-global`
 					commands = {},
 					window = {
 						position = "left",
@@ -186,7 +178,6 @@ require("lazy").setup({
 							["<cr>"] = "open",
 							["<esc>"] = "cancel", -- close preview or floating neo-tree window
 							["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
-							-- Read `# Preview Mode` for more information
 							["l"] = "focus_preview",
 							["S"] = "open_split",
 							["s"] = "open_vsplit",
@@ -203,8 +194,6 @@ require("lazy").setup({
 							--["Z"] = "expand_all_nodes",
 							["a"] = {
 								"add",
-								-- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
-								-- some commands may take optional config options, see `:h neo-tree-mappings` for details
 								config = {
 									show_path = "none" -- "none", "relative", "absolute"
 								}
@@ -216,12 +205,6 @@ require("lazy").setup({
 							["x"] = "cut_to_clipboard",
 							["p"] = "paste_from_clipboard",
 							["c"] = "copy", -- takes text input for destination, also accepts the optional config.show_path option like "add":
-							-- ["c"] = {
-							--  "copy",
-							--  config = {
-							--    show_path = "none" -- "none", "relative", "absolute"
-							--  }
-							--}
 							["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
 							["q"] = "close_window",
 							["R"] = "refresh",
@@ -261,17 +244,11 @@ require("lazy").setup({
 						},
 						follow_current_file = {
 							enabled = false,  -- This will find and focus the file in the active buffer every time
-							--               -- the current file is changed while the tree is open.
 							leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
 						},
 						group_empty_dirs = false, -- when true, empty folders will be grouped together
 						hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-						-- in whatever position is specified in window.position
-						-- "open_current",  -- netrw disabled, opening a directory opens within the
-						-- window like netrw would, regardless of window.position
-						-- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
 						use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
-						-- instead of relying on nvim autocmd events.
 						window = {
 							mappings = {
 								["<bs>"] = "navigate_up",
@@ -279,8 +256,7 @@ require("lazy").setup({
 								["H"] = "toggle_hidden",
 								["/"] = "noop",
 								["D"] = "fuzzy_finder_directory",
-								["#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
-								-- ["D"] = "fuzzy_sorter_directory",
+								["#"] = "fuzzy_sorter",
 								["f"] = "filter_on_submit",
 								["<c-x>"] = "clear_filter",
 								["[g"] = "prev_git_modified",
@@ -300,7 +276,6 @@ require("lazy").setup({
 								["<C-n>"] = "move_cursor_down",
 								["<up>"] = "move_cursor_up",
 								["<C-p>"] = "move_cursor_up",
-								-- ['<key>'] = function(state, scroll_padding) ... end,
 							},
 						},
 
@@ -353,9 +328,6 @@ require("lazy").setup({
 				})
 			end
 		},
-
-
-
 		{
 			'nvim-treesitter/nvim-treesitter',
 			build = ":TSUpdate",
@@ -369,54 +341,45 @@ require("lazy").setup({
 					indent = { enable = true },
 				})
 			end
-		}, {
-		"folke/trouble.nvim",
-		opts = {}, -- for default options, refer to the configuration section for custom setup.
-		cmd = "Trouble",
-		keys = {
-			{
-				"<leader>xx",
-				"<cmd>Trouble diagnostics toggle win.position=right win.size=0.25<cr>",
-				desc = "Diagnostics (Trouble)",
-			},
-			{
-				"<leader>xX",
-				"<cmd>Trouble diagnostics toggle filter.buf=0 win.position=right win.size=0.25<cr>",
-				desc = "Buffer Diagnostics (Trouble)",
-			},
-			{
-				"<leader>cs",
-				"<cmd>Trouble symbols toggle focus=true win.position=right win.size=0.25<cr>",
-				desc = "Symbols (Trouble)",
-			},
-			{
-				"<leader>cl",
-				"<cmd>Trouble lsp toggle focus=true win.position=right win.size=0.25<cr>",
-				desc = "LSP Definitions / references / ... (Trouble)",
-			},
-			{
-				"<leader>xL",
-				"<cmd>Trouble loclist toggle<cr>",
-				desc = "Location List (Trouble)",
-			},
-			{
-				"<leader>xQ",
-				"<cmd>Trouble qflist toggle<cr>",
-				desc = "Quickfix List (Trouble)",
+		},
+		{
+			"folke/trouble.nvim",
+			opts = {}, -- for default options, refer to the configuration section for custom setup.
+			cmd = "Trouble",
+			keys = {
+				{
+					"<leader>xx",
+					"<cmd>Trouble diagnostics toggle win.position=right win.size=0.25<cr>",
+					desc = "Diagnostics (Trouble)",
+				},
+				{
+					"<leader>xX",
+					"<cmd>Trouble diagnostics toggle filter.buf=0 win.position=right win.size=0.25<cr>",
+					desc = "Buffer Diagnostics (Trouble)",
+				},
+				{
+					"<leader>cs",
+					"<cmd>Trouble symbols toggle focus=true win.position=right win.size=0.25<cr>",
+					desc = "Symbols (Trouble)",
+				},
+				{
+					"<leader>cl",
+					"<cmd>Trouble lsp toggle focus=true win.position=right win.size=0.25<cr>",
+					desc = "LSP Definitions / references / ... (Trouble)",
+				},
+				{
+					"<leader>xL",
+					"<cmd>Trouble loclist toggle<cr>",
+					desc = "Location List (Trouble)",
+				},
+				{
+					"<leader>xQ",
+					"<cmd>Trouble qflist toggle<cr>",
+					desc = "Quickfix List (Trouble)",
+				},
 			},
 		},
-	},
-		{ 'lewis6991/gitsigns.nvim' },
-		{ 'j-hui/fidget.nvim' },
-		{ 'echasnovski/mini.nvim',   version = false },
-		{ 'neovim/nvim-lspconfig' },
-		{ 'hrsh7th/nvim-cmp' },
-		{ 'hrsh7th/cmp-nvim-lsp' },
-		{ 'junegunn/fzf' },
-		{ 'junegunn/fzf.vim' },
-		{ 'feline-nvim/feline.nvim' },
-		{ 'akinsho/bufferline.nvim', version = "*",       dependencies = 'nvim-tree/nvim-web-devicons' },
-		{ 'tpope/vim-fugitive' }
+
 	},
 	install = { colorscheme = { "habamax" } },
 	checker = { enabled = true },
@@ -426,17 +389,10 @@ require("lazy").setup({
 require('mini.pairs').setup()
 require('mini.comment').setup()
 require('mini.cursorword').setup()
-require('mini.indentscope').setup()
 require('mini.surround').setup()
-
-vim.opt.signcolumn = 'yes'
-
-local lspconfig_defaults = require('lspconfig').util.default_config
-lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-	'force',
-	lspconfig_defaults.capabilities,
-	require('cmp_nvim_lsp').default_capabilities()
-)
+require('gitsigns').setup()
+require("eagle").setup()
+require("dapui").setup()
 
 vim.api.nvim_create_autocmd('LspAttach', {
 	desc = 'LSP actions',
@@ -456,9 +412,49 @@ vim.api.nvim_create_autocmd('LspAttach', {
 	end,
 })
 
-require('lspconfig').pylsp.setup({})
-require('lspconfig').clangd.setup({})
+local cmp = require('cmp')
+cmp.setup({
+	snippet = {
+		expand = function(args)
+			vim.snippet.expand(args.body)
+		end,
+	},
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
+	mapping = cmp.mapping.preset.insert({
+		['<C-b>'] = cmp.mapping.scroll_docs(-4),
+		['<C-f>'] = cmp.mapping.scroll_docs(4),
+		['<C-Space>'] = cmp.mapping.complete(),
+		['<C-e>'] = cmp.mapping.abort(),
+		['<CR>'] = cmp.mapping.confirm({ select = true }),
+	}),
+	sources = cmp.config.sources({
+		{ name = 'nvim_lsp' },
+		{ name = 'buffer' },
+		{ name = 'path' },
+	})
+})
+
+cmp.setup.cmdline(':', {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = 'path' },
+		{ name = 'cmdline' }
+	}),
+	matching = { disallow_symbol_nonprefix_matching = false }
+})
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require('lspconfig').pylsp.setup({
+	capabilities = capabilities
+})
+require('lspconfig').clangd.setup({
+	capabilities = capabilities
+})
 require 'lspconfig'.lua_ls.setup {
+	capabilities = capabilities,
 	on_init = function(client)
 		if client.workspace_folders then
 			local path = client.workspace_folders[1].name
@@ -484,22 +480,32 @@ require 'lspconfig'.lua_ls.setup {
 	}
 }
 
+local on_attach = function(bufnr)
+	vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+end
 
-local cmp = require('cmp')
-
-cmp.setup({
-	sources = {
-		{ name = 'nvim_lsp' },
-	},
-	snippet = {
-		expand = function(args)
-			-- You need Neovim v0.10 to use vim.snippet
-			vim.snippet.expand(args.body)
-		end,
-	},
-	mapping = cmp.mapping.preset.insert({}),
+require('lspconfig').rust_analyzer.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	settings = {
+		["rust-analyzer"] = {
+			imports = {
+				granularity = {
+					group = "module",
+				},
+				prefix = "self",
+			},
+			cargo = {
+				buildScripts = {
+					enable = true,
+				},
+			},
+			procMacro = {
+				enable = true
+			},
+		}
+	}
 })
-
 
 
 local ctp_feline = require('catppuccin.groups.integrations.feline')
@@ -514,7 +520,7 @@ require("bufferline").setup({
 		offsets = {
 			{
 				filetype = "neo-tree",
-				text = "Nvim Tree",
+				text = "Neo-Tree",
 				separator = true,
 				text_align = "center",
 			},
@@ -522,11 +528,65 @@ require("bufferline").setup({
 	}
 })
 
-require('gitsigns').setup()
+require("noice").setup({
+	lsp = {
+		-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+		override = {
+			["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+			["vim.lsp.util.stylize_markdown"] = true,
+			["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+		},
+	},
+	-- you can enable a preset for easier configuration
+	presets = {
+		bottom_search = true,   -- use a classic bottom cmdline for search
+		command_palette = false, -- position the cmdline and popupmenu together
+		long_message_to_split = true, -- long messages will be sent to a split
+		inc_rename = false,     -- enables an input dialog for inc-rename.nvim
+		lsp_doc_border = false, -- add a border to hover docs and signature help
+	},
+})
 
-require("fidget").setup()
+require('scrollview').setup({
+	excluded_filetypes = { 'nerdtree' },
+	current_only = true,
+	base = 'right',
+	signs_on_startup = { 'diagnostics', 'search' },
+	diagnostics_severities = { vim.diagnostic.severity.ERROR }
+})
 
+require("ibl").setup({
+	scope = {
+		enabled = false
+	}
 
+})
+local actions = require("telescope.actions")
+require('telescope').setup {
+	extensions = {
+		fzf = {
+			fuzzy = true,          -- false will only do exact matching
+			override_generic_sorter = true, -- override the generic sorter
+			override_file_sorter = true, -- override the file sorter
+			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+			-- the default case_mode is "smart_case"
+		}
+	},
+	defaults = {
+		mappings = {
+			i = {
+				["<esc>"] = actions.close,
+			},
+		},
+	},
+
+}
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
+
+vim.opt.signcolumn = 'yes'
+vim.o.mousemoveevent = true
 vim.cmd.colorscheme "catppuccin"
 vim.opt.number = true
 vim.opt.expandtab = false
@@ -541,27 +601,20 @@ vim.opt.shiftround = true
 vim.opt.copyindent = true
 vim.opt.ruler = true
 vim.opt.compatible = false
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
-
-
 vim.opt["tabstop"] = 4
 vim.opt["shiftwidth"] = 4
-vim.opt["mouse"] = "r"
+vim.opt["mouse"] = "a"
 
-vim.cmd([[nnoremap <C-n> :Neotree toggle<cr>]])
-vim.cmd([[nnoremap <C-p> :Files<cr>]])
-vim.cmd([[nnoremap <C-g> :RG<cr>]])
-vim.cmd([[nnoremap <Tab> :bnext<cr>]])
-vim.cmd([[nnoremap <S-Tab> :bprevious<cr>]])
-vim.cmd([[nnoremap <C-c> :bp\|bd<cr>]])
-vim.cmd([[nnoremap <C-s> :Neotree focus git_status<cr>]])
-vim.cmd([[nnoremap <leader>bl :Gitsigns blame<cr>]])
-vim.cmd([[nnoremap <leader>Bl :Gitsigns toggle_current_line_blame<cr>]])
+vim.cmd([[set clipboard=unnamedplus]])
+vim.cmd([[nnoremap <C-n> <cmd>Neotree toggle<cr>]])
+vim.cmd([[nnoremap <C-p> <cmd>Telescope find_files<cr>]])
+vim.cmd([[nnoremap <C-g> <cmd>Telescope live_grep<cr>]])
+vim.cmd([[nnoremap <Tab> <cmd>bnext<cr>]])
+vim.cmd([[nnoremap <S-Tab> <cmd>bprevious<cr>]])
+vim.cmd([[nnoremap <C-c> <cmd>bp\|bd<cr>]])
+vim.cmd([[nnoremap <C-s> <cmd>Neotree focus git_status<cr>]])
+vim.cmd([[nnoremap <leader>bl <cmd>Gitsigns blame<cr>]])
+vim.cmd([[nnoremap <leader>Bl <cmd>>Gitsigns toggle_current_line_blame<cr>]])
 vim.cmd([[autocmd StdinReadPre * let s:std_in=1]])
-
-
-
-
-
-
